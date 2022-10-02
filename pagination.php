@@ -1,29 +1,10 @@
 <?php
-$db = new\db();
-/*
-if($classU->friends($user->id)->rowcount() < 1){
- $my_friend_list = $db->connect()->query("SELECT id AS 'id_user' FROM usernames WHERE id = '{$user->id}'");
- }else{
- $my_friend_list = $classU->friends($user->id);
- }
-foreach($my_friend_list->fetchAll(PDO::FETCH_OBJ) AS $friend_id){
-//recorre la lista de amigos primero.
-//print_r($friend_id->id_users);
-$query = $db->connect()->query("SELECT * FROM public WHERE id_user = '{$friend_id->id_users}' || id_user = '{$friend_id->id_user}'");
-BREAK;
-}
- //verificar si hay publicaciónes de amigos.
-  if($query->rowcount() < 1){
-  echo "<div class='notif'><p>Para poder mirar una publicación agrega a un amigo.</p></div>";
-  }else{
-  $row = $query->rowcount();
-  }
-*/ 
-
+$db = new db(); 
+$http = "";	
  $query = $db->connect()->query("SELECT * FROM public LIMIT 0,100");
   $row = $query->rowcount();
 	//número de páginas
-	$page_rows = 10;
+	$page_rows = 5;
   //nombre de dominio.
   $domain = "";
 	$last = ceil($row/$page_rows);

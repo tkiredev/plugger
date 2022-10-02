@@ -7,17 +7,19 @@ require('require.php');
 class users EXTENDS db{
  public $access;
  public $msg_index;
+ 
  public function __construct(){
-  //verificar si hay acceso a toda la matriz.
+  //verificar si hay acceso ala apps
   $valid = $this->connect()->query("SELECT access,msg_index FROM notification")->fetch(PDO::FETCH_OBJ);
 
   if($valid->access > 0 ){
-  $this->access = true;
- }else{
- $this->access = false;
- $this->msg_index = $valid->msg_index;
+   $this->access = true;
+  }else{
+   $this->access = false;
+   $this->msg_index = $valid->msg_index;
+  }
  }
- }
+ 
  function get_users($num,$pass){
  $sql = $this->connect()->prepare("SELECT id,rol FROM usernames WHERE numer = :num and password = :pass");
  $sql->bindParam(':num',$num,PDO::PARAM_STR);
@@ -43,24 +45,21 @@ class users EXTENDS db{
  }
 
  #SESSION
- function session($sesion,$cook,$rol){
-  if($sesion > 0 AND $this->access == true ){
-//hay session.
- if($sesion > 0 AND $this->access == true AND $rol >0){
- header("location:/");
-}
-}else if($cook > 0 AND $this->access == true){
-if(empty($sesion)){
-$_SESSION["username"] = $cook;
-header("location:{$_SERVER['PHP_SELF']}");
- }
-}else if($sesion > 0 AND $this->access == false AND $rol >0){
-//hay acceso para usuario autorizado.
-echo "<div class='notif'><p>modo: DEMO.</p><a class='btn btn-1' href='../admin'>volver al panel.</a></div>";
-}else{
-header('location: /');
-}
-
+ function sessionFilter($s,$c,$r){
+ 
+  if($s > 0 && $this->access && $r > 1){
+  //hay session 
+  echo "A";
+  // header("location:/");
+  }
+  
+  //comprobar si hay cookie
+  
+  
+  //verificar si hay solo acceso al administrador
+   if($s >1 && $this->access === false && $r > 1){
+    echo "<div class='notif'><p>modo: DEMO.</p><a class='btn btn-1' href='../admin'>volver al panel.</a></div>";
+   }
  }
 
  public function notif(){
@@ -133,6 +132,10 @@ id FROM messages WHERE token_user = '{$user_id}' AND view = 0");
  return false;
   }
  }
-
+ 
+ public function view($e){
+  header("location: ${e}.php");
+ }
+ 
 }# => ENDCLASS
 ?>

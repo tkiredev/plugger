@@ -1,7 +1,4 @@
 <?PHP
-//include bots
-include('robot.php');
-
 #CLEANER CHAN
 function cleaner($e){
 //$st = filter_var($e,FILTER_SANITIZE_STRING);
@@ -20,10 +17,10 @@ return bin2hex(random_bytes($x - $x % 2 / 2));
 }
 #TIME STAMP
 function timestamp($time){
- $dateTime = new\DateTime();
+ $dateTime = new DateTime();
  $dateTime->setTimestamp($time);
 
- $new = new\dateTime('now');
+ $new = new dateTime('now');
  $diff = $new->diff($dateTime);
  $return = 'hace ';
 
