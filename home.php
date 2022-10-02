@@ -16,5 +16,5 @@ $classU->sessionFilter($_SESSION['username'],$_COOKIE,$_SESSION['rol']);
 
 //incluir plantilla de inicio
   require_once "template/view-home.php";
-} else $classU->view("index.php");
+} else header("location:/");
 ?>
